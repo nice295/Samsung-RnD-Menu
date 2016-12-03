@@ -15,82 +15,90 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="Fridge Please">
+  <meta name="description" content="Demonstrates the use of Google Cloud Database with a Firebase DB">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fridge Please</title>
+  <title>Firebase Database Quickstart</title>
 
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="Fridge Please">
-  <meta name="theme-color" content="#1DCE6C">
+  <meta name="application-name" content="Firebase Database Quickstart">
+  <meta name="theme-color" content="#303F9F">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Fridge Please">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#1DCE6C">
+  <meta name="apple-mobile-web-app-title" content="Firebase Database Quickstart">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#303F9F">
 
   <!-- Tile icon for Win8 -->
-  <meta name="msapplication-TileColor" content="#1DCE6C">
-  <meta name="msapplication-navbutton-color" content="#1CAF5E">
+  <meta name="msapplication-TileColor" content="#3372DF">
+  <meta name="msapplication-navbutton-color" content="#303F9F">
 
   <!-- Material Design Lite -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.2.1/material.green-orange.min.css">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.blue_grey-orange.min.css">
   <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
   <link rel="stylesheet" href="main.css">
 
-  <script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
   <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyDOCDFo9vqrnDauv-m7x1wiuDpq8qTJnKw",
-      authDomain: "samsungrndmenu.firebaseapp.com",
-      databaseURL: "https://samsungrndmenu.firebaseio.com",
-      storageBucket: "samsungrndmenu.appspot.com",
-      messagingSenderId: "603407599897"
-    };
-    firebase.initializeApp(config);
-  </script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDOCDFo9vqrnDauv-m7x1wiuDpq8qTJnKw",
+    authDomain: "samsungrndmenu.firebaseapp.com",
+    databaseURL: "https://samsungrndmenu.firebaseio.com",
+    storageBucket: "samsungrndmenu.appspot.com",
+    messagingSenderId: "603407599897"
+  };
+  firebase.initializeApp(config);
+</script>
 
 </head>
 <body>
-  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+  <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
 
     <!-- Splash screen -->
-    <!--
     <section id="page-splash">
-      <h3 class="logo">FRIDGE PLEASE</h3>
+      <h3 class="logo">Database Web Quickstart</h3>
+      <div>
+        <button id="sign-in-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign in with Google</button>
+        <button id="sign-in-guest-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Enter as Guest mode</button>
+      </div>
     </section>
-    -->
 
     <!-- Header section containing logo and menu -->
-    <header class="header mdl-layout__header">
-      <!-- Title -->
-      <div class="mdl-layout__header-row titlebar">
-        <h3 id="logo-title" class="logo mdl-color-text--white">FRIDGE PLEASE</h3>
-        <div class="mdl-layout-spacer"></div>
-        <!-- Navigation. We hide it in small screens. -->
-        <nav class="mdl-navigation">
-        <a class="mdl-navigation__link mdl-color-text--white" href="FridgeInside.framer/index.html">냉장고 내부</a>
-        <i class="material-icons mdl-color-text--white">more_vert</i>
-        </nav>
+    <header class="header mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
 
+      <div class="mdl-layout__header-row titlebar">
+        <h3 class="logo">Database Web Quickstart</h3>
+        <button id="sign-out-button" class="mdl-button--raised mdl-button mdl-js-button mdl-js-ripple-effect"><i class="material-icons">account_circle</i> Sign out</button>
       </div>
 
-
-      <!-- Tab -->
-      <div class="tab mdl-layout__tab-bar">
-        <div id="menu-recent" class="mdl-layout__tab is-active mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-          나의 식재료
-
-        </div>
-        <div id="menu-my-posts" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect mdl-color-text--white">
-          추천 음식
+      <!-- Navigation Bar -->
+      <div class="tab mdl-layout__header-row mdl-color--light-blue-600">
+        <div class="mdl-tab">
+          <!-- khlee -->
+          <div id="menu-lunch" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
+            점심
+          </div>
+          <div id="menu-recent" class="mdl-layout__tab is-active mdl-button mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">new_releases</i> Recent
+          </div>
+          <div id="menu-my-posts" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">home</i> My posts
+          </div>
+          <div id="menu-my-top-posts" class="mdl-layout__tab mdl-button mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">trending_up</i> My top posts
+          </div>
+          <button class="mdl-button mdl-js-button mdl-button--fab mdl-color--amber-400 mdl-shadow--4dp mdl-js-ripple-effect" id="add">
+            <i class="material-icons">mode_edit</i>
+          </button>
         </div>
       </div>
     </header>
@@ -126,150 +134,53 @@
       </div>
     </section>
 
-    <!-- Show a list of recent posts -->
-    <section class="mdl-grid content" id="recent-posts-list" style="display:none">
-      <div class="posts-container demo-list-action mdl-list">
-        <!-- Sample imte -->
-        <!--
-        <div class="mdl-list__item">
-          <span class="mdl-list__item-primary-content">
-            <image class="item-pic" src="http://www.getmdl.io/assets/demos/dog.png">
-              <span class="item-name mdl-color-text--large">name</span>
-            </span>
-            <span class="item-time mdl-color-text--small mdl-color-text--grey-600">8 days</span>
+    <!-- Show a list of lunch -->
+    <section class="mdl-grid content" id="lunch-posts-list" style="display:none">
+      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
+
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+          <div class="card">
           </div>
-        </div>
-        -->
-      </section>
-
-      <!-- Show the list of user's posts -->
-      <section class="mdl-grid content" id="user-posts-list" style="display:none">
-
-        <!-- Card1 -->
-        <div class="mdl-cell mdl-cell--12-col demo-card-wide mdl-card mdl-shadow--2dp">
-          <div class="card1 mdl-card__title">
-            <h2 class="mdl-card__title-text"></h2>
+          <div class="mdl-card__title mdl-card--border">
+            <h3 class="restaurant mdl-card__title-text">싱푸</h3>
           </div>
           <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">돼지갈비 해장국</h2>
+            <h3 class="menu mdl-card__title-text mdl-color-text--black">돼지갈비 해장국</h3>
           </div>
-          <div class="mdl-card__supporting-text">
+          <div class="description mdl-card__supporting-text">
             뼈다귀해장국 바이바이~, 난 고깃살 두툼한 돼지갈비해장국이다!!^^
           </div>
           <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              요리 시작
-            </a>
-          </div>
-          <div class="mdl-card__menu">
             <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons">favorite</i>
+              <i class="material-icons mdl-color-text--orange">favorite_border</i>
             </button>
           </div>
         </div>
 
-        <!-- Card2 -->
-        <div class="mdl-cell mdl-cell--12-col demo-card-wide mdl-card mdl-shadow--2dp">
-          <div class="card2 mdl-card__title">
-            <h2 class="mdl-card__title-text"></h2>
-          </div>
-          <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">닭볶음탕</h2>
-          </div>
-          <div class="mdl-card__supporting-text">
-            총각김치 넣고 나만의 닭볶음탕 황금레시피
-          </div>
-          <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              요리 시작
-            </a>
-          </div>
-          <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons">favorite</i>
-            </button>
-          </div>
-        </div>
+      </div>
 
-        <!-- Card3 -->
-        <div class="mdl-cell mdl-cell--12-col demo-card-wide mdl-card mdl-shadow--2dp">
-          <div class="card3 mdl-card__title">
-            <h2 class="mdl-card__title-text"></h2>
-          </div>
-          <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">만두 북어국</h2>
-          </div>
-          <div class="mdl-card__supporting-text">
-            만두국과 북어국의 콜라보,,,만두북어국 끓이는법
-          </div>
-          <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              요리 시작
-            </a>
-          </div>
-          <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons">favorite</i>
-            </button>
-          </div>
-        </div>
+    </section>
 
-        <!-- Card4 -->
-        <div class="mdl-cell mdl-cell--12-col demo-card-wide mdl-card mdl-shadow--2dp">
-          <div class="card4 mdl-card__title">
-            <h2 class="mdl-card__title-text"></h2>
-          </div>
-          <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">코다리 조림</h2>
-          </div>
-          <div class="mdl-card__supporting-text">
-            건나물 듬뿍 넣고 밥도둑 코다리조림 만드는 법 
-          </div>
-          <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              요리 시작
-            </a>
-          </div>
-          <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons">favorite</i>
-            </button>
-          </div>
-        </div>
+    <!-- Show a list of recent posts -->
+    <section class="mdl-grid content" id="recent-posts-list" style="display:none">
+      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
+      </div>
+    </section>
 
-        <!-- Card5 -->
-        <div class="mdl-cell mdl-cell--12-col demo-card-wide mdl-card mdl-shadow--2dp">
-          <div class="card5 mdl-card__title">
-            <h2 class="mdl-card__title-text"></h2>
-          </div>
-          <div class="mdl-card__title">
-            <h2 class="mdl-card__title-text">﻿﻿메추리알 장조림﻿﻿﻿​​</h2>
-          </div>
-          <div class="mdl-card__supporting-text">
-            다시마와 새송이버섯을 넣은 메추리알장조림 황금레시피
-          </div>
-          <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-              요리 시작
-            </a>
-          </div>
-          <div class="mdl-card__menu">
-            <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-              <i class="material-icons">favorite</i>
-            </button>
-          </div>
-        </div>
+    <!-- Show the list of user's posts -->
+    <section class="mdl-grid content" id="user-posts-list" style="display:none">
+      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
+      </div>
+    </section>
 
-      </section>
+    <!-- Show the list of top user's posts -->
+    <section class="mdl-grid content" id="top-user-posts-list" style="display:none">
+      <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
+      </div>
+    </section>
+  </main>
+</div>
 
-      <!-- Show the list of top user's posts -->
-      <section class="mdl-grid content" id="top-user-posts-list" style="display:none">
-        <div class="posts-container mdl-cell mdl-cell--12-col mdl-grid">
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <script src="scripts/main.js"></script>
+<script src="scripts/main.js"></script>
 </body>
 </html>

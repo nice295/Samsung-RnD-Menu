@@ -41,31 +41,10 @@ hr {
     margin: 16px;
 }
 
-.card1 {
-
+.card {
     color: #F59D00;
-    height: 200px;
+    height: 300px;
     background: url('./images/pork.png') center / cover;
-}
-.card2 {
-  color: #F59D00;
-  height: 200px;
-  background: url('./images/chicken.png') center / cover;
-}
-.card3 {
-  color: #F59D00;
-  height: 200px;
-  background: url('./images/mandu.png') center / cover;
-}
-.card4 {
-  color: #F59D00;
-  height: 200px;
-  background: url('./images/codari.png') center / cover;
-}
-.card5 {
-  color: #F59D00;
-  height: 200px;
-  background: url('./images/egg.png') center / cover;
 }
 .demo-card-wide > .mdl-card__title {
     color: #F59D00;
@@ -197,6 +176,10 @@ h3 {
     text-align: left;
 }
 #sign-in-button {
+    margin-left: 10px;
+    color: inherit;
+}
+#sign-in-guest-button {
     margin-left: 10px;
     color: inherit;
 }
