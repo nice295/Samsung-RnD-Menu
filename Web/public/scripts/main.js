@@ -34,7 +34,7 @@ var recentMenuButton = document.getElementById('menu-recent');
 var myPostsMenuButton = document.getElementById('menu-my-posts');
 var myTopPostsMenuButton = document.getElementById('menu-my-top-posts');
 var listeningFirebaseRefs = [];
-
+var foodImageMap = new Map();
 /**
  * Saves a new post to the Firebase DB.
  */
@@ -85,11 +85,11 @@ function toggleStar(postRef, uid) {
 }
 // [END post_stars_transaction]
 
-function createMenuElement(restaurant, menu, description, image) {
+function createMenuElement(restaurant, menu, description) {
   var html = 
   '<div class="demo-card-wide mdl-card mdl-shadow--2dp">'+
   '<div class="card item-image">'+
-  '</div>'+
+  '</div>'+ 
   '<div class="mdl-card__title mdl-card--border">'+
   '<h3 class="item-restaurant mdl-card__title-text">싱푸</h3>'+
   '</div>'+
@@ -111,12 +111,15 @@ function createMenuElement(restaurant, menu, description, image) {
   div.innerHTML = html;
   var postElement = div.firstChild;
 
+  var image = foodImageMap.get(menu);
+  console.log("image: " + image);
+  
   // Set values.
   postElement.getElementsByClassName('item-restaurant')[0].innerText = restaurant;
   postElement.getElementsByClassName('item-menu')[0].innerText = menu;
   postElement.getElementsByClassName('item-description')[0].innerText = description;
   postElement.getElementsByClassName('item-image')[0].style.backgroundImage = 'url("' +
-  (image || './images/no-image.jpg') + '")';
+  (image || './images/no-image.jpg') + '")';  
 
   // add color text
   /*
@@ -299,7 +302,17 @@ function createMenuElement(restaurant, menu, description, image) {
   var comment = postElement.getElementsByClassName('comment-' + id)[0];
   comment.parentElement.removeChild(comment);
 }
+function initFood() {
+  var foodRef = firebase.database().ref('foods');
 
+  foodRef.on('child_added', function(data) {
+    console.log("Food: " + data.key);
+    console.log("Image: " + data.val().image);
+
+    foodImageMap.set(data.key, data.val().image);
+  });
+
+}
 /**
  * Starts listening for new posts and populates posts lists.
  */
@@ -308,7 +321,9 @@ function createMenuElement(restaurant, menu, description, image) {
   var myUserId = firebase.auth().currentUser.uid;
 
   //khlee
-  var today = "20161201";
+  var today = new Date();
+  today = today.toISOString().slice(0,10).replace(/-/g,"");
+  console.log("today: " + today);
   var cateteriaNumber = "1식당";
   var lunchPostsRef = firebase.database().ref('menu/' + today + "/" + cateteriaNumber);
   console.log("Ref: " + lunchPostsRef);
@@ -316,10 +331,9 @@ function createMenuElement(restaurant, menu, description, image) {
   var fetchMenus = function(postsRef, sectionElement) {
     postsRef.on('child_added', function(data) {
       console.log("Data: " + data.key + ", " + data.val().menu + ", " + data.val().description);
-      console.log("Image: " + data.val().image);
       var containerElement = sectionElement.getElementsByClassName('posts-container')[0];
       containerElement.insertBefore(
-        createMenuElement(data.key, data.val().menu, data.val().description, data.val().image),
+        createMenuElement(data.key, data.val().menu, data.val().description),
         containerElement.firstChild);
     });
     postsRef.on('child_changed', function(data) { 
@@ -397,6 +411,11 @@ function writeUserData(userId, name, email, imageUrl) {
  * Cleanups the UI and removes all Firebase listeners.
  */
  function cleanupUi() {
+  //khlee - for debug
+  recentMenuButton.style.visibility='hidden';
+  myPostsMenuButton.style.visibility='hidden';
+  myTopPostsMenuButton.style.visibility='hidden';
+
   // Remove all previously displayed posts.
   lunchPostsSection.getElementsByClassName('posts-container')[0].innerHTML = ''; //khlee
   topUserPostsSection.getElementsByClassName('posts-container')[0].innerHTML = '';
@@ -430,6 +449,7 @@ function writeUserData(userId, name, email, imageUrl) {
     currentUID = user.uid;
     splashPage.style.display = 'none';
     writeUserData(user.uid, user.displayName, user.email, user.photoURL);
+    initFood();
     startDatabaseQueries();
   } else {
     // Set currentUID to null.
@@ -541,10 +561,13 @@ window.addEventListener('load', function() {
   myTopPostsMenuButton.onclick = function() {
     showSection(topUserPostsSection, myTopPostsMenuButton);
   };
+  /*
   addButton.onclick = function() {
     showSection(addPost);
     messageInput.value = '';
     titleInput.value = '';
   };
-  recentMenuButton.onclick();
+  */
+  //recentMenuButton.onclick();
+  lunchMenuButton.onclick(); //khlee
 }, false);
