@@ -33,8 +33,12 @@ var lunchMenuButton = document.getElementById('menu-lunch'); //khlee
 var recentMenuButton = document.getElementById('menu-recent');
 var myPostsMenuButton = document.getElementById('menu-my-posts');
 var myTopPostsMenuButton = document.getElementById('menu-my-top-posts');
+var menuCafe1 = document.getElementById('menu-cafe-1');
+var menuCafe2 = document.getElementById('menu-cafe-2');
+var textCafe = document.getElementById('text-cafe');
 var listeningFirebaseRefs = [];
 var foodImageMap = new Map();
+var cateteriaNumber = "1식당";
 /**
  * Saves a new post to the Firebase DB.
  */
@@ -313,6 +317,14 @@ function initFood() {
   });
 
 }
+
+function pad(number) {
+  if (number < 10) {
+    return '0' + number;
+  }
+  return number;
+}
+
 /**
  * Starts listening for new posts and populates posts lists.
  */
@@ -322,9 +334,14 @@ function initFood() {
 
   //khlee
   var today = new Date();
-  today = today.toISOString().slice(0,10).replace(/-/g,"");
+
+  console.log("getFullYear: " + today.getFullYear());
+  console.log("getMonth: " + pad(today.getMonth() + 1));
+  console.log("getDate: " + pad(today.getDate()));
+  today = today.getFullYear() + "" + pad(today.getMonth() + 1) + pad(today.getDate());
   console.log("today: " + today);
-  var cateteriaNumber = "1식당";
+
+  //var cateteriaNumber = "1식당";
   var lunchPostsRef = firebase.database().ref('menu/' + today + "/" + cateteriaNumber);
   console.log("Ref: " + lunchPostsRef);
 
@@ -560,6 +577,26 @@ window.addEventListener('load', function() {
   };
   myTopPostsMenuButton.onclick = function() {
     showSection(topUserPostsSection, myTopPostsMenuButton);
+  };
+
+  myTopPostsMenuButton.onclick = function() {
+    showSection(topUserPostsSection, myTopPostsMenuButton);
+  };
+
+  menuCafe2.onclick = function() {
+    cateteriaNumber = "2식당";
+    document.getElementsByClassName('text-cafe')[0].innerText = "2식당";
+    console.log("2식당");
+    cleanupUi();
+    startDatabaseQueries();
+
+  };
+  menuCafe1.onclick = function() {
+    cateteriaNumber = "1식당";
+    document.getElementsByClassName('text-cafe')[0].innerText = "1식당";
+    console.log("1식당");
+    cleanupUi();
+    startDatabaseQueries();
   };
   /*
   addButton.onclick = function() {
