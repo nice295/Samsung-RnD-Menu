@@ -91,24 +91,26 @@ function toggleStar(postRef, uid) {
 
 function createMenuElement(restaurant, menu, description) {
   var html = 
-  '<div class="demo-card-wide mdl-card mdl-shadow--2dp">'+
-  '<div class="card item-image">'+
-  '</div>'+ 
-  '<div class="mdl-card__title mdl-card--border">'+
-  '<h3 class="item-restaurant mdl-card__title-text">싱푸</h3>'+
-  '</div>'+
-  '<div class="mdl-card__title">'+
-  '<h3 class="item-menu mdl-card__title-text mdl-color-text--black">돼지갈비 해장국</h3>'+
-  '</div>'+
-  '<div class="item-description mdl-card__supporting-text">'+
-  '뼈다귀해장국 바이바이~, 난 고깃살 두툼한 돼지갈비해장국이다!!^^'+
-  '</div>'+
-  '<div class="mdl-card__actions mdl-card--border">'+
-  '<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">'+
-  '<i class="material-icons mdl-color-text--orange">favorite_border</i>'+
-  '</button>'+
-  '</div>'+
-  '</div>';
+      '<div class="mdl-card mdl-cell mdl-cell--6-col mdl-cell--4-col-tablet mdl-shadow--2dp">'+
+        '<figure class="mdl-card__media">'+
+        '  <img class="item-image img-responsive" src="" alt="" />'+
+        '</figure>'+
+        '<div class="mdl-card__title mdl-color-text--orange mdl-card--border">'+
+        '  <h3 class="item-restaurant">H5</h3>'+
+        '</div>'+
+        '<div class="mdl-card__title">'+
+        '  <h5 class="item-menu">Learning Web Design</h5>'+
+        '</div>'+
+        '<div class="mdl-card__supporting-text">'+
+        '  <p class="item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam accusamus, consectetur.</p>'+
+        '</div>'+
+        '<div class="mdl-card__actions mdl-card--border">'+
+        '  <!--<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">Read More</a>-->'+
+        '  <div class="mdl-layout-spacer"></div>'+
+        '  <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">favorite_border</i></button>'+
+        '  <button class="mdl-button mdl-button--icon mdl-button--colored"><i class="material-icons">share</i></button>'+
+        '</div>'+
+      '</div>';
 
   // Create the DOM element from the HTML.
   var div = document.createElement('div');
@@ -122,8 +124,9 @@ function createMenuElement(restaurant, menu, description) {
   postElement.getElementsByClassName('item-restaurant')[0].innerText = restaurant;
   postElement.getElementsByClassName('item-menu')[0].innerText = menu;
   postElement.getElementsByClassName('item-description')[0].innerText = description;
-  postElement.getElementsByClassName('item-image')[0].style.backgroundImage = 'url("' +
-  (image || './images/no-image.jpg') + '")';  
+  //postElement.getElementsByClassName('item-image')[0].style.backgroundImage = 'url("' +
+  //(image || './images/no-image.jpg') + '")';  
+  postElement.getElementsByClassName('item-image')[0].src = image || './images/no-image.jpg';  
 
   // add color text
   /*
